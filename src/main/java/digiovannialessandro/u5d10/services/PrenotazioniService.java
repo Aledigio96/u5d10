@@ -52,4 +52,8 @@ public class PrenotazioniService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).descending());
         return this.prenotazioniRepository.findAll(pageable);
     }
+    public void findByIdAndDelete(int prenotazioneId) {
+        Prenotazione found = this.findById(prenotazioneId);
+        this.prenotazioniRepository.delete(found);
+    }
 }
