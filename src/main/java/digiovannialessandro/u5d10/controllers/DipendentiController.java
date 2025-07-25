@@ -55,4 +55,9 @@ public class DipendentiController {
         return this.dipendentiService.uploadImg(file);
 
     }
+    @DeleteMapping("/{dipendenteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void getByIdAndDelete(@PathVariable int dipendenteId) {
+        this.dipendentiService.findByIdAndDelete(dipendenteId);
+    }
 }

@@ -49,4 +49,9 @@ public class ViaggiController {
     public Viaggio cambiaStato(@PathVariable int id, @RequestParam Stato stato) {
         return viaggiService.cambiamentoStato(id, stato);
     }
+    @DeleteMapping("/{viaggioId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void getByIdAndDelete(@PathVariable int viaggioId) {
+        this.viaggiService.findByIdAndDelete(viaggioId);
+    }
 }

@@ -57,4 +57,8 @@ public class DipendentiService {
             throw new BadRequestException("Ci sono stati problemi nel salvataggio del file!");
         }
     }
+    public void findByIdAndDelete(int dipendenteId) {
+        Dipendente found = this.findById(dipendenteId);
+        this.dipendentiRepository.delete(found);
+    }
 }

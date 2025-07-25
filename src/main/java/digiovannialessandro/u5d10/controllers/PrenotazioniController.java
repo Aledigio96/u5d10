@@ -46,4 +46,9 @@ public class PrenotazioniController {
     public Prenotazione getById(@PathVariable int prenotazioneId) {
         return this.prenotazioniService.findById(prenotazioneId);
     }
+    @DeleteMapping("/{prenotazioneId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void getByIdAndDelete(@PathVariable int prenotazioneId) {
+        this.prenotazioniService.findByIdAndDelete(prenotazioneId);
+    }
 }

@@ -2,6 +2,7 @@ package digiovannialessandro.u5d10.services;
 
 import digiovannialessandro.u5d10.ecxeptions.NotFoundException;
 import digiovannialessandro.u5d10.entities.Dipendente;
+import digiovannialessandro.u5d10.entities.Prenotazione;
 import digiovannialessandro.u5d10.entities.Viaggio;
 import digiovannialessandro.u5d10.enums.Stato;
 import digiovannialessandro.u5d10.payloads.ViaggiPayload;
@@ -38,5 +39,9 @@ public class ViaggiService {
         found.setStato(stato);
         Viaggio statoMod = viaggiRepository.save(found);
         return statoMod;
+    }
+    public void findByIdAndDelete(int viaggioId) {
+        Viaggio found = this.findById(viaggioId);
+        this.viaggiRepository.delete(found);
     }
 }
