@@ -12,6 +12,7 @@ public class Dipendente {
     private String name;
     private String surname;
     private String email;
+    private String urlImg;
 
 
     public Dipendente() {
@@ -59,6 +60,14 @@ public class Dipendente {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUrlImg() {
+        return urlImg;
+    }
+
+    public void setUrlImg(String urlImg) {
+        this.urlImg = urlImg;
     }
 
     @Override

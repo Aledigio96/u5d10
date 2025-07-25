@@ -1,4 +1,17 @@
 package digiovannialessandro.u5d10.payloads;
 
-public class ViaggiPayload {
+import digiovannialessandro.u5d10.enums.Stato;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
+import java.time.LocalDate;
+
+public record ViaggiPayload (
+         @NotEmpty(message = "La data di partenza è obbligatoria")
+         LocalDate dataPartenza,
+         @NotEmpty(message = "La data di destinazione è obbligatoria")
+         @Size(min = 2,max = 15)
+         String destinazione,
+         @NotEmpty(message = "Lo stato del viaggio è obbligatorio")
+         Stato stato){
 }

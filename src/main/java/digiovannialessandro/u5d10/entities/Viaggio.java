@@ -12,7 +12,7 @@ public class Viaggio {
     private int id;
     private LocalDate dataPartenza;
     private String destinazione;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Stato stato;
 
     public Viaggio() {
@@ -27,7 +27,7 @@ public class Viaggio {
     public int getId() {
         return id;
     }
-    
+
     public LocalDate getDataPartenza() {
         return dataPartenza;
     }

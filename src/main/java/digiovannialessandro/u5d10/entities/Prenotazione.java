@@ -12,19 +12,21 @@ public class Prenotazione {
     private int id;
     private LocalDate dataDiRichiesta;
     @ManyToOne
-    @JoinTable(name = "viaggioId")
+    @JoinColumn(name = "viaggioId")
     private Viaggio viaggio;
     @ManyToOne
-    @JoinTable(name = "dipendenteId")
+    @JoinColumn(name = "dipendenteId")
     private Dipendente dipendente;
+    private String nota;
 
     public Prenotazione() {
     }
 
-    public Prenotazione(LocalDate dataDiRichiesta, Viaggio viaggio, Dipendente dipendente) {
+    public Prenotazione(LocalDate dataDiRichiesta, Viaggio viaggio, Dipendente dipendente,String nota) {
         this.dataDiRichiesta = dataDiRichiesta;
         this.viaggio = viaggio;
         this.dipendente = dipendente;
+        this.nota=nota;
     }
 
     public Dipendente getDipendente() {
@@ -53,5 +55,13 @@ public class Prenotazione {
 
     public void setViaggio(Viaggio viaggio) {
         this.viaggio = viaggio;
+    }
+
+    public String getNota() {
+        return nota;
+    }
+
+    public void setNota(String nota) {
+        this.nota = nota;
     }
 }
