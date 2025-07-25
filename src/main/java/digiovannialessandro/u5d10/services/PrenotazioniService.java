@@ -1,6 +1,7 @@
 package digiovannialessandro.u5d10.services;
 
 import digiovannialessandro.u5d10.ecxeptions.BadRequestException;
+import digiovannialessandro.u5d10.ecxeptions.NotFoundException;
 import digiovannialessandro.u5d10.entities.Dipendente;
 import digiovannialessandro.u5d10.entities.Prenotazione;
 import digiovannialessandro.u5d10.entities.Viaggio;
@@ -9,6 +10,10 @@ import digiovannialessandro.u5d10.repositories.DipendentiRepository;
 import digiovannialessandro.u5d10.repositories.PrenotazioniRepository;
 import digiovannialessandro.u5d10.repositories.ViaggiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,5 +43,13 @@ public class PrenotazioniService {
         Prenotazione prenotazione = new Prenotazione(payload.dataDiRichiesta(),viaggio,dipendente);
 
         return prenotazioniRepository.save(prenotazione);
+    }
+    public Prenotazione findById(int prenotazioneId) {
+        return this.prenotazioniRepository.findById(prenotazioneId).orElseThrow(() -> new NotFoundException(prenotazioneId));
+    }
+    public Page<Prenotazione> findAll(int pageNumber, int pageSize, String sortBy) {
+        if (pageSize > 50) pageSize = 50;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).descending());
+        return this.prenotazioniRepository.findAll(pageable);
     }
 }

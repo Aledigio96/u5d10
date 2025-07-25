@@ -1,5 +1,7 @@
 package digiovannialessandro.u5d10.services;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import digiovannialessandro.u5d10.ecxeptions.BadRequestException;
 import digiovannialessandro.u5d10.ecxeptions.NotFoundException;
 import digiovannialessandro.u5d10.ecxeptions.ValidationException;
@@ -13,11 +15,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 @Service
 public class DipendentiService {
     @Autowired
     private DipendentiRepository dipendentiRepository;
+    @Autowired
+    private Cloudinary imgUploader;
 
     public Dipendente save(DipendentiPayload payload) {
 
@@ -40,5 +47,14 @@ public class DipendentiService {
 
     public Dipendente findById(int dipendenteId) {
         return this.dipendentiRepository.findById(dipendenteId).orElseThrow(() -> new NotFoundException(dipendenteId));
+    }
+    public String uploadImg(MultipartFile file) {
+        try {
+            Map result = imgUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+            String imageURL = (String) result.get("url");
+            return imageURL;
+        } catch (Exception e) {
+            throw new BadRequestException("Ci sono stati problemi nel salvataggio del file!");
+        }
     }
 }

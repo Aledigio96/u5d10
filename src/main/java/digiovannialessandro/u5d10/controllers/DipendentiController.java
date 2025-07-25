@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/dipendenti")
@@ -46,5 +47,12 @@ public class DipendentiController {
     @GetMapping("/{dipendenteId}")
     public Dipendente getById(@PathVariable int dipendenteId) {
         return this.dipendentiService.findById(dipendenteId);
+    }
+    @PatchMapping("/{dipendenteId}/img")
+    public String uploadImage(@RequestParam("img") MultipartFile file) {
+        System.out.println(file.getOriginalFilename());
+        System.out.println(file.getSize());
+        return this.dipendentiService.uploadImg(file);
+
     }
 }

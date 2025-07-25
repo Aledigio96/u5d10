@@ -9,6 +9,7 @@ import digiovannialessandro.u5d10.payloads.RespDipendentiDTO;
 import digiovannialessandro.u5d10.payloads.RespPrenotazioniDTO;
 import digiovannialessandro.u5d10.services.PrenotazioniService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -30,5 +31,19 @@ public class PrenotazioniController {
             return new RespPrenotazioniDTO(newPrenotazione.getId());
         }
 
+    }
+    @GetMapping
+    public Page<Prenotazione> findAll(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "id") String sortBy
+    ) {
+
+        return this.prenotazioniService.findAll(page, size, sortBy);
+    }
+
+
+    @GetMapping("/{prenotazioneId}")
+    public Prenotazione getById(@PathVariable int prenotazioneId) {
+        return this.prenotazioniService.findById(prenotazioneId);
     }
 }

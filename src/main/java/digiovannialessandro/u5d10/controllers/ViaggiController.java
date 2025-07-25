@@ -3,6 +3,7 @@ package digiovannialessandro.u5d10.controllers;
 import digiovannialessandro.u5d10.ecxeptions.ValidationException;
 import digiovannialessandro.u5d10.entities.Dipendente;
 import digiovannialessandro.u5d10.entities.Viaggio;
+import digiovannialessandro.u5d10.enums.Stato;
 import digiovannialessandro.u5d10.payloads.ViaggiPayload;
 import digiovannialessandro.u5d10.services.ViaggiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,9 @@ public class ViaggiController {
     @GetMapping("/{viaggioId}")
     public Viaggio getById(@PathVariable int viaggioId) {
         return this.viaggiService.findById(viaggioId);
+    }
+    @PatchMapping("/{viaggioId}/stato")
+    public Viaggio cambiaStato(@PathVariable int id, @RequestParam Stato stato) {
+        return viaggiService.cambiamentoStato(id, stato);
     }
 }

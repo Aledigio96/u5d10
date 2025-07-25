@@ -3,6 +3,7 @@ package digiovannialessandro.u5d10.services;
 import digiovannialessandro.u5d10.ecxeptions.NotFoundException;
 import digiovannialessandro.u5d10.entities.Dipendente;
 import digiovannialessandro.u5d10.entities.Viaggio;
+import digiovannialessandro.u5d10.enums.Stato;
 import digiovannialessandro.u5d10.payloads.ViaggiPayload;
 import digiovannialessandro.u5d10.repositories.ViaggiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,11 @@ public class ViaggiService {
 
     public Viaggio findById(int viaggioId) {
         return this.viaggiRepository.findById(viaggioId).orElseThrow(() -> new NotFoundException(viaggioId));
+    }
+    public Viaggio cambiamentoStato(int id, Stato stato) {
+        Viaggio found = findById(id);
+        found.setStato(stato);
+        Viaggio statoMod = viaggiRepository.save(found);
+        return statoMod;
     }
 }
