@@ -3,9 +3,14 @@ package digiovannialessandro.u5d10.services;
 import digiovannialessandro.u5d10.ecxeptions.BadRequestException;
 import digiovannialessandro.u5d10.ecxeptions.ValidationException;
 import digiovannialessandro.u5d10.entities.Dipendente;
+import digiovannialessandro.u5d10.entities.Viaggio;
 import digiovannialessandro.u5d10.payloads.DipendentiPayload;
 import digiovannialessandro.u5d10.repositories.DipendentiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,5 +30,10 @@ public class DipendentiService {
         Dipendente newDipendente = new Dipendente(payload.username(), payload.name(), payload.surname(), payload.email());
         Dipendente dipendenteSalvato=this.dipendentiRepository.save(newDipendente);
         return dipendenteSalvato;
+    }
+    public Page<Dipendente> findAll(int pageNumber, int pageSize, String sortBy) {
+        if (pageSize > 50) pageSize = 50;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).descending());
+        return this.dipendentiRepository.findAll(pageable);
     }
 }

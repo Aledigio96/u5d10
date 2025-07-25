@@ -33,12 +33,12 @@ public class DipendentiController {
     }
 
 
-//    @GetMapping
-//    public Page<Dipendente> findAll(@RequestParam(defaultValue = "0") int page,
-//                                    @RequestParam(defaultValue = "10") int size,
-//                                    @RequestParam(defaultValue = "id") String sortBy
-//    ) {
-//
-//        return this.dipendentiService.findAll(page, size, sortBy);
-//    }
+    @GetMapping
+    public Page<Dipendente> findAll(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "id") String sortBy
+    ) {
+
+        return this.dipendentiService.findAll(page, size, sortBy);
+    }
 }
