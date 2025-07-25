@@ -1,5 +1,7 @@
 package digiovannialessandro.u5d10.services;
 
+import digiovannialessandro.u5d10.ecxeptions.NotFoundException;
+import digiovannialessandro.u5d10.entities.Dipendente;
 import digiovannialessandro.u5d10.entities.Viaggio;
 import digiovannialessandro.u5d10.payloads.ViaggiPayload;
 import digiovannialessandro.u5d10.repositories.ViaggiRepository;
@@ -25,5 +27,9 @@ public class ViaggiService {
         if (pageSize > 50) pageSize = 50;
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).descending());
         return this.viaggiRepository.findAll(pageable);
+    }
+
+    public Viaggio findById(int viaggioId) {
+        return this.viaggiRepository.findById(viaggioId).orElseThrow(() -> new NotFoundException(viaggioId));
     }
 }

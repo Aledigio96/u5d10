@@ -1,0 +1,34 @@
+package digiovannialessandro.u5d10.controllers;
+
+import digiovannialessandro.u5d10.ecxeptions.ValidationException;
+import digiovannialessandro.u5d10.entities.Dipendente;
+import digiovannialessandro.u5d10.entities.Prenotazione;
+import digiovannialessandro.u5d10.payloads.DipendentiPayload;
+import digiovannialessandro.u5d10.payloads.PrenotazioniPayload;
+import digiovannialessandro.u5d10.payloads.RespDipendentiDTO;
+import digiovannialessandro.u5d10.payloads.RespPrenotazioniDTO;
+import digiovannialessandro.u5d10.services.PrenotazioniService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/prenotazioni")
+public class PrenotazioniController {
+    @Autowired
+    private PrenotazioniService prenotazioniService;
+@PostMapping
+@ResponseStatus(HttpStatus.CREATED)
+    public RespPrenotazioniDTO save(@RequestBody @Validated PrenotazioniPayload payload, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            throw new ValidationException(validationResult.getFieldErrors()
+                    .stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
+        } else {
+            Prenotazione newPrenotazione = this.prenotazioniService.save(payload);
+            return new RespPrenotazioniDTO(newPrenotazione.getId());
+        }
+
+    }
+}

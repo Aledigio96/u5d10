@@ -41,4 +41,10 @@ public class DipendentiController {
 
         return this.dipendentiService.findAll(page, size, sortBy);
     }
+
+
+    @GetMapping("/{dipendenteId}")
+    public Dipendente getById(@PathVariable int dipendenteId) {
+        return this.dipendentiService.findById(dipendenteId);
+    }
 }

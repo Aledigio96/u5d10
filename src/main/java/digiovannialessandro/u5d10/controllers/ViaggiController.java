@@ -1,6 +1,7 @@
 package digiovannialessandro.u5d10.controllers;
 
 import digiovannialessandro.u5d10.ecxeptions.ValidationException;
+import digiovannialessandro.u5d10.entities.Dipendente;
 import digiovannialessandro.u5d10.entities.Viaggio;
 import digiovannialessandro.u5d10.payloads.ViaggiPayload;
 import digiovannialessandro.u5d10.services.ViaggiService;
@@ -37,5 +38,10 @@ public class ViaggiController {
     ) {
 
         return this.viaggiService.findAll(page, size, sortBy);
+    }
+
+    @GetMapping("/{viaggioId}")
+    public Viaggio getById(@PathVariable int viaggioId) {
+        return this.viaggiService.findById(viaggioId);
     }
 }

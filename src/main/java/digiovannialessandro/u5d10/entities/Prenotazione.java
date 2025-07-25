@@ -17,16 +17,16 @@ public class Prenotazione {
     @ManyToOne
     @JoinColumn(name = "dipendenteId")
     private Dipendente dipendente;
-    private String nota;
+
 
     public Prenotazione() {
     }
 
-    public Prenotazione(LocalDate dataDiRichiesta, Viaggio viaggio, Dipendente dipendente,String nota) {
+    public Prenotazione(LocalDate dataDiRichiesta, Viaggio viaggio, Dipendente dipendente) {
         this.dataDiRichiesta = dataDiRichiesta;
         this.viaggio = viaggio;
         this.dipendente = dipendente;
-        this.nota=nota;
+
     }
 
     public Dipendente getDipendente() {
@@ -57,11 +57,5 @@ public class Prenotazione {
         this.viaggio = viaggio;
     }
 
-    public String getNota() {
-        return nota;
-    }
 
-    public void setNota(String nota) {
-        this.nota = nota;
-    }
 }

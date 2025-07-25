@@ -1,6 +1,7 @@
 package digiovannialessandro.u5d10.services;
 
 import digiovannialessandro.u5d10.ecxeptions.BadRequestException;
+import digiovannialessandro.u5d10.ecxeptions.NotFoundException;
 import digiovannialessandro.u5d10.ecxeptions.ValidationException;
 import digiovannialessandro.u5d10.entities.Dipendente;
 import digiovannialessandro.u5d10.entities.Viaggio;
@@ -35,5 +36,9 @@ public class DipendentiService {
         if (pageSize > 50) pageSize = 50;
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).descending());
         return this.dipendentiRepository.findAll(pageable);
+    }
+
+    public Dipendente findById(int dipendenteId) {
+        return this.dipendentiRepository.findById(dipendenteId).orElseThrow(() -> new NotFoundException(dipendenteId));
     }
 }

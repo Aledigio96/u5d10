@@ -1,4 +1,42 @@
 package digiovannialessandro.u5d10.services;
 
+import digiovannialessandro.u5d10.ecxeptions.BadRequestException;
+import digiovannialessandro.u5d10.entities.Dipendente;
+import digiovannialessandro.u5d10.entities.Prenotazione;
+import digiovannialessandro.u5d10.entities.Viaggio;
+import digiovannialessandro.u5d10.payloads.PrenotazioniPayload;
+import digiovannialessandro.u5d10.repositories.DipendentiRepository;
+import digiovannialessandro.u5d10.repositories.PrenotazioniRepository;
+import digiovannialessandro.u5d10.repositories.ViaggiRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class PrenotazioniService {
+    @Autowired
+    private PrenotazioniRepository prenotazioniRepository;
+    @Autowired
+    private ViaggiRepository viaggiRepository;
+    @Autowired
+    private DipendentiRepository dipendentiRepository;
+
+    public Prenotazione save(PrenotazioniPayload payload) {
+
+        boolean alreadyExists = prenotazioniRepository.existsByDipendente_IdAndDataDiRichiesta(
+                 payload.dipendenteId(), payload.dataDiRichiesta()
+        );
+
+        if (alreadyExists) {
+            throw new BadRequestException("L'utente ha già una prenotazione per questa data.");
+        }
+        Viaggio viaggio = viaggiRepository.findById(payload.viaggioId())
+                .orElseThrow(() -> new BadRequestException("Viaggio non trovato"));
+
+        Dipendente dipendente = dipendentiRepository.findById(payload.dipendenteId())
+                .orElseThrow(() -> new BadRequestException("Dipendente non trovato"));
+
+        Prenotazione prenotazione = new Prenotazione(payload.dataDiRichiesta(),viaggio,dipendente);
+
+        return prenotazioniRepository.save(prenotazione);
+    }
 }
